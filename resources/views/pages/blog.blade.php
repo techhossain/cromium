@@ -11,28 +11,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-@foreach($posts as $post)
+
+                @foreach($posts as $post)
                     <article class="cropium-blog-item">
                         <div class="blog-image">
                             <img src="{{$post->thumbnail}}" alt="">
                             <div class="blog-date">
-                                <h5 class="title">14</h5>
-                                <span>oct</span>
+                                <h5 class="title">{{substr($post->published_at,8,2 )}}</h5>
+                                <span>
+                                {{
+                                date("F", mktime(0, 0, 0, substr($post->published_at,5,2 ), 10))
+                                }}</span>
                             </div>
                         </div>
                         <div class="blog-content">
                             <div class="blog-meta">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-user-o"></i>john doe</a></li>
-                                    <li><a href="#"><i class="fa fa-bookmark-o"></i>creative, portfolio</a></li>
+                                    <li><a href="#"><i class="fa fa-user-o"></i>{{$post->author_name}}</a></li>
+                                    <li><a href="#"><i class="fa fa-bookmark-o"></i>{{$post->category}}</a></li>
                                 </ul>
                             </div>
-                            <h3 class="title"><a href="/blog/blog-details">{{$post->title}}</a></h3>
+                            <h3 class="title"><a href="{{route('single-post', $post->slug)}}">{{$post->title}}</a></h3>
                             <p>{{$post->excerpt}}</p>
                         </div>
                     </article>
-@endforeach
+                @endforeach
+
                 </div>
+                
                 <!-- Blog Sidebar Starts -->
                 <div class="col-lg-4">
                     <aside class="widget-area sidebar">
