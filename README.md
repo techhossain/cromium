@@ -18,4 +18,4 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 -   Run **php artisan migrate**
 -   Run **php artisan db:seed**
 -   Run **php artisan serve**
--   Go to **http://localhost:8000/**
+-   Go to **http://127.0.0.1:8000**
