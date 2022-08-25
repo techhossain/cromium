@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2 class="title">{{$title}}</h2>
-                <a href="{{route('home')}}">Home</a><span> / {{$title}}</span>
+                <a href="{{route('home')}}">Home</a><span> / <a href="{{route('category-post', $slug)}}">{{$title}}</a></span>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
                         <div class="blog-meta">
                             <ul>
                                 <li><a href="/user/{{ $post->user->username }}"><i class="fa fa-user-o"></i>{{ $post->user->name }}</a></li>
-                                <li><a href="{{route('user-post', $post->user->username)}}"><i class="fa fa-bookmark-o"></i>{{$post->category->name}}</a></li>
+                                <li><a href="{{route('category-post', $post->category->slug)}}"><i class="fa fa-bookmark-o"></i>{{$post->category->name}}</a></li>
                                 <li><i class="fa fa-calendar"></i>{{date('d, F', strtotime($post->created_at))}}</li>
                                 <li><i class="fa fa-clock-o"></i>{{$post->views}} views</li>
                             </ul>

@@ -117,7 +117,8 @@ class BlogsController extends Controller
         return view('pages.category-posts', [
             // 'data' => Blog::where('category_id', $id)->get(),
             'data' => $category->posts,
-            'title' => $category->name
+            'title' => $category->name,
+            'slug'  => $category->slug
         ]);
     }
 
