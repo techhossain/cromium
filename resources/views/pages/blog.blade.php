@@ -2,7 +2,16 @@
 
 @section('content')
     <!-- Breadcrumb Area Starts -->
-    @include('components.blog.breadcrumb')
+    <section class="breadcrumb-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="title">{{$title}}</h2>
+                    <a href="{{route('home')}}">Home</a><span> / {{$title}}</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
     <!-- Blog Area Starts -->
@@ -15,24 +24,32 @@
                 @foreach($posts as $post)
                     <article class="cropium-blog-item">
                         <div class="blog-image">
-                            <img src="{{$post->thumbnail}}" alt="">
+                            <a href="{{route('single-post', $post->slug)}}">
+                                <img src="{{$post->feature_image}}" alt="{{$post->title}}">
+                            </a>
                             <div class="blog-date">
-                                <h5 class="title">{{substr($post->published_at,8,2 )}}</h5>
-                                <span>
-                                {{
-                                date("F", mktime(0, 0, 0, substr($post->published_at,5,2 ), 10))
-                                }}</span>
+                                <h5 class="title"> {{date('d', strtotime($post->created_at))}}</h5>
+                                <span> {{date('F', strtotime($post->created_at))}} </span>
                             </div>
                         </div>
                         <div class="blog-content">
                             <div class="blog-meta">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-user-o"></i>{{$post->author_name}}</a></li>
-                                    <li><a href="#"><i class="fa fa-bookmark-o"></i>{{$post->category}}</a></li>
+                                    <li><a href="/user/{{ $post->user->username }}"><i class="fa fa-user-o"></i>{{ $post->user->name }}</a></li>
+                                    <li><a href="/category/{{$post->category->slug}}"><i class="fa fa-bookmark-o"></i>{{$post->category->name}}</a></li>
+                                    <li><i class="fa fa-calendar"></i>{{date('d, F', strtotime($post->created_at))}}</li>
+                                    <li><i class="fa fa-clock-o"></i>{{$post->views}} views</li>
                                 </ul>
                             </div>
-                            <h3 class="title"><a href="{{route('single-post', $post->slug)}}">{{$post->title}}</a></h3>
-                            <p>{{$post->excerpt}}</p>
+                            <h3 class="title">
+                                <a href="{{route('single-post', $post->slug)}}">
+                                    {{$post->id}} . {{$post->title}}
+                                </a>
+                            </h3>
+
+                            <div>
+                                <p>{{$post->excerpt}}</p>
+                            </div>
                         </div>
                     </article>
                 @endforeach
@@ -125,19 +142,19 @@
                     </aside>
                 </div>
             </div>
+
+
             <!-- Blog Pagination Starts -->
             <div class="row order-md-1">
                 <div class="col-lg-12">
-                    <div class="cropium-blog-pagination">
-                        <ul>
-                            <li><i class="fa fa-angle-left"></i></li>
-                            <li class="active"><span>1</span></li>
-                            <li><span>2</span></li>
-                            <li><i class="fa fa-angle-right"></i></li>
-                        </ul>
-                    </div>
+
+                    {{-- {{ $posts->links("vendor.pagination.bootstrap-4") }} --}}
+
                 </div>
             </div>
+
+
+
         </div>
     </div>
 

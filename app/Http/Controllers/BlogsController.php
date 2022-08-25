@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class BlogsController extends Controller
@@ -14,8 +18,21 @@ class BlogsController extends Controller
      */
     public function index()
     {
-        $allposts = DB::table('posts')->get();
-        return view("pages.blog", ['posts' => $allposts]);
+        // $allposts = Cache::remember('posts-maher', now()->addMinutes(1), function () {
+        //     return DB::table('blogs')->paginate(3);
+        // });
+
+        // return view("pages.blog", [
+        //     'posts' => $allposts,
+        //     'title' => 'Blog Page'
+        // ]);
+
+        // dd(Blog::all());
+
+        return view("pages.blog", [
+            'posts' => Blog::all(),
+            'title' => 'Blog Page'
+        ]);
     }
 
     /**
@@ -45,10 +62,18 @@ class BlogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show(Blog $blog)
     {
-        $single_post = DB::table('posts')->where('slug', $slug)->first();
-        return view("pages.blog-details", ['post' => $single_post]);
+        // $single_post = cache()->remember('posts.{$slug}', now()->addMinutes(50), function () use ($slug) {
+        //     return DB::table('blogs')->where('slug', $slug)->first();
+        // });
+
+        // Blog::where('slug', $slug)->get()->first()
+
+        // cache()->forget('posts.{$slug}');
+
+        // $single_post = DB::table('blogs')->where('slug', $slug)->first();
+        return view("pages.blog-details", ['post' => $blog]);
     }
 
     /**
@@ -83,5 +108,24 @@ class BlogsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function getPostByCategory(Category $category)
+    {
+        // $id = Category::firstWhere('slug', $slug)->id;
+        return view('pages.category-posts', [
+            // 'data' => Blog::where('category_id', $id)->get(),
+            'data' => $category->posts,
+            'title' => $category->name
+        ]);
+    }
+
+    public function getPostByUser(User $user)
+    {
+        return view('pages.user-posts', [
+            'title' => $user->name,
+            'data' => $user
+        ]);
     }
 }
