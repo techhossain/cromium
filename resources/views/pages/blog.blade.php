@@ -6,8 +6,24 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="title">{{$title}}</h2>
-                    <a href="{{route('home')}}">Home</a><span> / {{$title}}</span>
+                    <h2 class="title">
+                        @if(request('search'))
+                            Search Result for : {{request('search')}}
+                        @else
+                            {{$title}}
+                        @endif
+                    
+                    </h2>
+
+                    <a href="{{route('home')}}">Home</a>
+                    <span> / 
+                    @if(!request('search'))
+                        <a href="{{route('blog')}}">{{$title}}</a>
+                    @else
+                        Search: <a href="">{{request('search')}}</a>
+                    @endif
+
+                    </span>
                 </div>
             </div>
         </div>
@@ -21,6 +37,12 @@
             <div class="row">
                 <div class="col-lg-8">
 
+                   
+                @if($posts->count() <1)
+
+                    <h3>No Posts Found with the search terms : "{{request('search')}}"</h3>
+                @else
+                
                 @foreach($posts as $post)
                     <article class="cropium-blog-item">
                         <div class="blog-image">
@@ -54,6 +76,8 @@
                     </article>
                 @endforeach
 
+                @endif
+
                 </div>
                 
                 <!-- Blog Sidebar Starts -->
@@ -63,8 +87,8 @@
                             <div class="widget-title">
                                 <h4 class="title">search</h4>
                             </div>
-                            <form action="#">
-                                <input type="text" placeholder="Search" class="input-shape">
+                            <form action="{{route('blog')}}">
+                                <input type="text" name="search" placeholder="Search" class="input-shape">
                                 <button type="submit"><i class="fa fa-search"></i></button>
                             </form>
                         </div>

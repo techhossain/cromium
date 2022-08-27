@@ -37,7 +37,7 @@
                             <div class="blog-meta">
                                 <ul>
                                     <li><a href="/user/{{ $post->user->username }}"><i class="fa fa-user-o"></i>{{ $post->user->name }}</a></li>
-                                    <li><a href="/category/{{$post->category->slug}}"><i class="fa fa-bookmark-o"></i>{{$post->category->name}}</a></li>
+                                    <li><a href="/category/{{$post->category->slug}}"><i class="fa fa-bookmark-o"></i>{{$category->name}}</a></li>
                                     <li><i class="fa fa-calendar"></i>{{date('d, F', strtotime($post->created_at))}}</li>
                                     <li><i class="fa fa-clock-o"></i>{{$post->views}} views</li>
                                 </ul>
@@ -117,12 +117,15 @@
                 <div class="col-lg-4">
                     <aside class="widget-area sidebar">
                         <div class="widget-search widget-style">
+
                             <div class="widget-title">
                                 <h4 class="title">search</h4>
                             </div>
-                            <form action="#">
-                                <input type="text" placeholder="Search" class="input-shape">
+                            <form method="GET" action="{{route('blog')}}">
+
+                                <input type="text" name="search" placeholder="Search" class="input-shape">
                                 <button type="submit"><i class="fa fa-search"></i></button>
+
                             </form>
                         </div>
     

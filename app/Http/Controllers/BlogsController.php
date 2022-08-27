@@ -29,8 +29,16 @@ class BlogsController extends Controller
 
         // dd(Blog::all());
 
+        $search_text = request('search');
+
+        // dd(Blog::where('title', 'LIKE', '%' . $search_text . '%')->get());
+
         return view("pages.blog", [
-            'posts' => Blog::all(),
+            // 'posts' => Blog::with('category', 'user')->get(),
+            'posts' => Blog::where('title', 'LIKE', '%' . $search_text . '%')
+                ->orWhere('excerpt', 'LIKE', '%' . $search_text . '%')
+                ->orWhere('content', 'LIKE', '%' . $search_text . '%')
+                ->get(),
             'title' => 'Blog Page'
         ]);
     }
@@ -73,7 +81,16 @@ class BlogsController extends Controller
         // cache()->forget('posts.{$slug}');
 
         // $single_post = DB::table('blogs')->where('slug', $slug)->first();
-        return view("pages.blog-details", ['post' => $blog]);
+
+        $category = $blog->category;
+
+
+        $blog->increment('views');
+
+        return view("pages.blog-details", [
+            'post'      => $blog,
+            'category'  => $category
+        ]);
     }
 
     /**
@@ -116,7 +133,8 @@ class BlogsController extends Controller
         // $id = Category::firstWhere('slug', $slug)->id;
         return view('pages.category-posts', [
             // 'data' => Blog::where('category_id', $id)->get(),
-            'data' => $category->posts,
+            // 'data' => $category->posts->load('user', 'category'), eager loading
+            'data' => $category->posts->load('user', 'category'),
             'title' => $category->name,
             'slug'  => $category->slug
         ]);
@@ -126,7 +144,9 @@ class BlogsController extends Controller
     {
         return view('pages.user-posts', [
             'title' => $user->name,
-            'data' => $user
+            'data'  => $user,
+            // 'posts' => $user->posts->load(['user', 'category']), eager loading
+            'posts' => $user->posts
         ]);
     }
 }

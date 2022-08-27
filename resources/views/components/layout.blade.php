@@ -87,6 +87,9 @@
                                     <li class="no-children">
                                         <a href="{{url('/contact')}}">contact</a>
                                     </li>
+                                    <li class="no-children">
+                                        <a href="{{url('/register')}}">Register</a>
+                                    </li>
                                 </ul>
                             </div>
 

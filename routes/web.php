@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -47,3 +48,8 @@ Route::get("/blog/{blog:slug}/", [BlogsController::class, 'show'])->name('single
 Route::get("/category/{category:slug}/", [BlogsController::class, 'getPostByCategory'])->name('category-post');
 
 Route::get("/user/{user:username}/", [BlogsController::class, 'getPostByUser'])->name('user-post');
+
+// Registration
+
+Route::get('register', [LoginController::class, 'register'])->name('register');
+Route::post('register', [LoginController::class, 'registerUser'])->name('registration');
