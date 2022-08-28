@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-lg-8">
 
-                @foreach($data as $post)
+                @foreach($posts as $post)
                 <article class="cropium-blog-item">
                     <div class="blog-image">
                         <a href="{{route('single-post', $post->slug)}}">
@@ -53,6 +53,9 @@
                     </div>
                 </article>
                 @endforeach
+
+                <!-- Category Pagination Starts -->
+            @include('components.pagination')
 
             </div>
 

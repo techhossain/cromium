@@ -57,39 +57,39 @@
 
                             <div class="collapse navbar-collapse" id="cropium-main-menu">
                                 <ul class="navbar-nav">
-                                    <li class="menu-item-has-children current-menu-item">
-                                        <a href="#">home</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="/">home 01</a></li>
-                                            <li><a href="/home-2">home 02</a></li>
-                                        </ul>
+                                    <li class="current-menu-item">
+                                        <a href="{{route('home')}}">home</a>
                                     </li>
                                     <li class="no-children">
                                         <a href="{{url('/about')}}">about</a>
                                     </li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">blog</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="{{url('/blog')}}">blog</a></li>
-                                            <li><a href="/blog/blog-details">blog details</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">pages</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="{{url('/service')}}">service</a></li>
-                                            <li><a href="/service/service-details">service details</a></li>
-                                            <li><a href="{{url('/portfolio')}}">portfolio</a></li>
-                                            <li><a href="/portfolio/portfolio-details">portfolio details</a></li>
-                                            <li><a href="/404">404</a></li>
-                                        </ul>
+                                    <li class="no-children">
+                                        <a href="{{url('/blog')}}">blog</a>
                                     </li>
                                     <li class="no-children">
                                         <a href="{{url('/contact')}}">contact</a>
                                     </li>
+
+                                    @guest
                                     <li class="no-children">
                                         <a href="{{url('/register')}}">Register</a>
                                     </li>
+                                    <li class="no-children">
+                                        <a href="{{url('/login')}}">Login</a>
+                                    </li>
+                                    @endguest
+
+                                    @auth
+                                    <li class="no-children">
+                                        <a href="{{url('/dashboard')}}">Dashboard</a>
+                                    </li>
+                                    <li class="no-children">
+                                        <form method="post" action="{{route('logout')}}">
+                                            @csrf
+                                            <input type="submit" class="btn btn-link text-light px-0" value="Logout">
+                                        </form>
+                                    </li>
+                                    @endauth
                                 </ul>
                             </div>
 

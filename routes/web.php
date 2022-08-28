@@ -2,8 +2,7 @@
 
 use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LoginController;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -51,5 +50,16 @@ Route::get("/user/{user:username}/", [BlogsController::class, 'getPostByUser'])-
 
 // Registration
 
-Route::get('register', [LoginController::class, 'register'])->name('register');
-Route::post('register', [LoginController::class, 'registerUser'])->name('registration');
+Route::get('register', [AuthController::class, 'register'])->name('register')->middleware('guest');
+Route::post('register', [AuthController::class, 'processRegistration'])->name('processRegistration');
+
+// Login
+Route::get('login', [AuthController::class, 'login'])->name('login')->middleware('guest');
+Route::post('login', [AuthController::class, 'processLogin'])->name('processLogin');
+
+// Logout
+Route::post('logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+// Dashboard
+Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard')->middleware('auth');

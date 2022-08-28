@@ -54,6 +54,9 @@
                 </article>
                 @endforeach
 
+                <!-- User Pagination Starts -->
+            @include('components.pagination')
+
             </div>
 
             <!-- Blog Sidebar Starts -->

@@ -38,7 +38,7 @@ class BlogsController extends Controller
             'posts' => Blog::where('title', 'LIKE', '%' . $search_text . '%')
                 ->orWhere('excerpt', 'LIKE', '%' . $search_text . '%')
                 ->orWhere('content', 'LIKE', '%' . $search_text . '%')
-                ->get(),
+                ->paginate(5),
             'title' => 'Blog Page'
         ]);
     }
@@ -134,7 +134,7 @@ class BlogsController extends Controller
         return view('pages.category-posts', [
             // 'data' => Blog::where('category_id', $id)->get(),
             // 'data' => $category->posts->load('user', 'category'), eager loading
-            'data' => $category->posts->load('user', 'category'),
+            'posts' => $category->posts()->paginate(3),
             'title' => $category->name,
             'slug'  => $category->slug
         ]);
@@ -146,7 +146,7 @@ class BlogsController extends Controller
             'title' => $user->name,
             'data'  => $user,
             // 'posts' => $user->posts->load(['user', 'category']), eager loading
-            'posts' => $user->posts
+            'posts' => $user->posts()->paginate(3)
         ]);
     }
 }
